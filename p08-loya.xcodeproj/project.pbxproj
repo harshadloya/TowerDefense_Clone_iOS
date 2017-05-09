@@ -1,0 +1,542 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		AF1D7E4A1EC27A5100FE0BD0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1D7E491EC27A5100FE0BD0 /* AppDelegate.swift */; };
+		AF1D7E4C1EC27A5100FE0BD0 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = AF1D7E4B1EC27A5100FE0BD0 /* GameScene.sks */; };
+		AF1D7E4E1EC27A5100FE0BD0 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = AF1D7E4D1EC27A5100FE0BD0 /* Actions.sks */; };
+		AF1D7E501EC27A5100FE0BD0 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1D7E4F1EC27A5100FE0BD0 /* GameScene.swift */; };
+		AF1D7E521EC27A5100FE0BD0 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1D7E511EC27A5100FE0BD0 /* GameViewController.swift */; };
+		AF1D7E551EC27A5100FE0BD0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AF1D7E531EC27A5100FE0BD0 /* Main.storyboard */; };
+		AF1D7E571EC27A5100FE0BD0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AF1D7E561EC27A5100FE0BD0 /* Assets.xcassets */; };
+		AF1D7E5A1EC27A5100FE0BD0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AF1D7E581EC27A5100FE0BD0 /* LaunchScreen.storyboard */; };
+		AF1D7E651EC27A5100FE0BD0 /* p08_loyaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1D7E641EC27A5100FE0BD0 /* p08_loyaTests.swift */; };
+		AF1D7E701EC27A5100FE0BD0 /* p08_loyaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1D7E6F1EC27A5100FE0BD0 /* p08_loyaUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		AF1D7E611EC27A5100FE0BD0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AF1D7E3E1EC27A5000FE0BD0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AF1D7E451EC27A5000FE0BD0;
+			remoteInfo = "p08-loya";
+		};
+		AF1D7E6C1EC27A5100FE0BD0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AF1D7E3E1EC27A5000FE0BD0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AF1D7E451EC27A5000FE0BD0;
+			remoteInfo = "p08-loya";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		AF1D7E461EC27A5000FE0BD0 /* p08-loya.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "p08-loya.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AF1D7E491EC27A5100FE0BD0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		AF1D7E4B1EC27A5100FE0BD0 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
+		AF1D7E4D1EC27A5100FE0BD0 /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
+		AF1D7E4F1EC27A5100FE0BD0 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		AF1D7E511EC27A5100FE0BD0 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		AF1D7E541EC27A5100FE0BD0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		AF1D7E561EC27A5100FE0BD0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		AF1D7E591EC27A5100FE0BD0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		AF1D7E5B1EC27A5100FE0BD0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AF1D7E601EC27A5100FE0BD0 /* p08-loyaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "p08-loyaTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AF1D7E641EC27A5100FE0BD0 /* p08_loyaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = p08_loyaTests.swift; sourceTree = "<group>"; };
+		AF1D7E661EC27A5100FE0BD0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AF1D7E6B1EC27A5100FE0BD0 /* p08-loyaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "p08-loyaUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AF1D7E6F1EC27A5100FE0BD0 /* p08_loyaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = p08_loyaUITests.swift; sourceTree = "<group>"; };
+		AF1D7E711EC27A5100FE0BD0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AF1D7E431EC27A5000FE0BD0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AF1D7E5D1EC27A5100FE0BD0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AF1D7E681EC27A5100FE0BD0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AF1D7E3D1EC27A5000FE0BD0 = {
+			isa = PBXGroup;
+			children = (
+				AF1D7E481EC27A5100FE0BD0 /* p08-loya */,
+				AF1D7E631EC27A5100FE0BD0 /* p08-loyaTests */,
+				AF1D7E6E1EC27A5100FE0BD0 /* p08-loyaUITests */,
+				AF1D7E471EC27A5000FE0BD0 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		AF1D7E471EC27A5000FE0BD0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AF1D7E461EC27A5000FE0BD0 /* p08-loya.app */,
+				AF1D7E601EC27A5100FE0BD0 /* p08-loyaTests.xctest */,
+				AF1D7E6B1EC27A5100FE0BD0 /* p08-loyaUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AF1D7E481EC27A5100FE0BD0 /* p08-loya */ = {
+			isa = PBXGroup;
+			children = (
+				AF1D7E491EC27A5100FE0BD0 /* AppDelegate.swift */,
+				AF1D7E4B1EC27A5100FE0BD0 /* GameScene.sks */,
+				AF1D7E4D1EC27A5100FE0BD0 /* Actions.sks */,
+				AF1D7E4F1EC27A5100FE0BD0 /* GameScene.swift */,
+				AF1D7E511EC27A5100FE0BD0 /* GameViewController.swift */,
+				AF1D7E531EC27A5100FE0BD0 /* Main.storyboard */,
+				AF1D7E561EC27A5100FE0BD0 /* Assets.xcassets */,
+				AF1D7E581EC27A5100FE0BD0 /* LaunchScreen.storyboard */,
+				AF1D7E5B1EC27A5100FE0BD0 /* Info.plist */,
+			);
+			path = "p08-loya";
+			sourceTree = "<group>";
+		};
+		AF1D7E631EC27A5100FE0BD0 /* p08-loyaTests */ = {
+			isa = PBXGroup;
+			children = (
+				AF1D7E641EC27A5100FE0BD0 /* p08_loyaTests.swift */,
+				AF1D7E661EC27A5100FE0BD0 /* Info.plist */,
+			);
+			path = "p08-loyaTests";
+			sourceTree = "<group>";
+		};
+		AF1D7E6E1EC27A5100FE0BD0 /* p08-loyaUITests */ = {
+			isa = PBXGroup;
+			children = (
+				AF1D7E6F1EC27A5100FE0BD0 /* p08_loyaUITests.swift */,
+				AF1D7E711EC27A5100FE0BD0 /* Info.plist */,
+			);
+			path = "p08-loyaUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AF1D7E451EC27A5000FE0BD0 /* p08-loya */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AF1D7E741EC27A5100FE0BD0 /* Build configuration list for PBXNativeTarget "p08-loya" */;
+			buildPhases = (
+				AF1D7E421EC27A5000FE0BD0 /* Sources */,
+				AF1D7E431EC27A5000FE0BD0 /* Frameworks */,
+				AF1D7E441EC27A5000FE0BD0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "p08-loya";
+			productName = "p08-loya";
+			productReference = AF1D7E461EC27A5000FE0BD0 /* p08-loya.app */;
+			productType = "com.apple.product-type.application";
+		};
+		AF1D7E5F1EC27A5100FE0BD0 /* p08-loyaTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AF1D7E771EC27A5100FE0BD0 /* Build configuration list for PBXNativeTarget "p08-loyaTests" */;
+			buildPhases = (
+				AF1D7E5C1EC27A5100FE0BD0 /* Sources */,
+				AF1D7E5D1EC27A5100FE0BD0 /* Frameworks */,
+				AF1D7E5E1EC27A5100FE0BD0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AF1D7E621EC27A5100FE0BD0 /* PBXTargetDependency */,
+			);
+			name = "p08-loyaTests";
+			productName = "p08-loyaTests";
+			productReference = AF1D7E601EC27A5100FE0BD0 /* p08-loyaTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		AF1D7E6A1EC27A5100FE0BD0 /* p08-loyaUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AF1D7E7A1EC27A5100FE0BD0 /* Build configuration list for PBXNativeTarget "p08-loyaUITests" */;
+			buildPhases = (
+				AF1D7E671EC27A5100FE0BD0 /* Sources */,
+				AF1D7E681EC27A5100FE0BD0 /* Frameworks */,
+				AF1D7E691EC27A5100FE0BD0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AF1D7E6D1EC27A5100FE0BD0 /* PBXTargetDependency */,
+			);
+			name = "p08-loyaUITests";
+			productName = "p08-loyaUITests";
+			productReference = AF1D7E6B1EC27A5100FE0BD0 /* p08-loyaUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AF1D7E3E1EC27A5000FE0BD0 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0830;
+				LastUpgradeCheck = 0830;
+				ORGANIZATIONNAME = "Harshad Loya";
+				TargetAttributes = {
+					AF1D7E451EC27A5000FE0BD0 = {
+						CreatedOnToolsVersion = 8.3.1;
+						ProvisioningStyle = Automatic;
+					};
+					AF1D7E5F1EC27A5100FE0BD0 = {
+						CreatedOnToolsVersion = 8.3.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = AF1D7E451EC27A5000FE0BD0;
+					};
+					AF1D7E6A1EC27A5100FE0BD0 = {
+						CreatedOnToolsVersion = 8.3.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = AF1D7E451EC27A5000FE0BD0;
+					};
+				};
+			};
+			buildConfigurationList = AF1D7E411EC27A5000FE0BD0 /* Build configuration list for PBXProject "p08-loya" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = AF1D7E3D1EC27A5000FE0BD0;
+			productRefGroup = AF1D7E471EC27A5000FE0BD0 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AF1D7E451EC27A5000FE0BD0 /* p08-loya */,
+				AF1D7E5F1EC27A5100FE0BD0 /* p08-loyaTests */,
+				AF1D7E6A1EC27A5100FE0BD0 /* p08-loyaUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AF1D7E441EC27A5000FE0BD0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AF1D7E551EC27A5100FE0BD0 /* Main.storyboard in Resources */,
+				AF1D7E4C1EC27A5100FE0BD0 /* GameScene.sks in Resources */,
+				AF1D7E571EC27A5100FE0BD0 /* Assets.xcassets in Resources */,
+				AF1D7E5A1EC27A5100FE0BD0 /* LaunchScreen.storyboard in Resources */,
+				AF1D7E4E1EC27A5100FE0BD0 /* Actions.sks in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AF1D7E5E1EC27A5100FE0BD0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AF1D7E691EC27A5100FE0BD0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AF1D7E421EC27A5000FE0BD0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AF1D7E501EC27A5100FE0BD0 /* GameScene.swift in Sources */,
+				AF1D7E521EC27A5100FE0BD0 /* GameViewController.swift in Sources */,
+				AF1D7E4A1EC27A5100FE0BD0 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AF1D7E5C1EC27A5100FE0BD0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AF1D7E651EC27A5100FE0BD0 /* p08_loyaTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AF1D7E671EC27A5100FE0BD0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AF1D7E701EC27A5100FE0BD0 /* p08_loyaUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		AF1D7E621EC27A5100FE0BD0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AF1D7E451EC27A5000FE0BD0 /* p08-loya */;
+			targetProxy = AF1D7E611EC27A5100FE0BD0 /* PBXContainerItemProxy */;
+		};
+		AF1D7E6D1EC27A5100FE0BD0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AF1D7E451EC27A5000FE0BD0 /* p08-loya */;
+			targetProxy = AF1D7E6C1EC27A5100FE0BD0 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		AF1D7E531EC27A5100FE0BD0 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AF1D7E541EC27A5100FE0BD0 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		AF1D7E581EC27A5100FE0BD0 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AF1D7E591EC27A5100FE0BD0 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		AF1D7E721EC27A5100FE0BD0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		AF1D7E731EC27A5100FE0BD0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		AF1D7E751EC27A5100FE0BD0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = "p08-loya/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "edu.binghamton.cs.gd.p08-loya";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		AF1D7E761EC27A5100FE0BD0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = "p08-loya/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "edu.binghamton.cs.gd.p08-loya";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+		AF1D7E781EC27A5100FE0BD0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = "p08-loyaTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "edu.binghamton.cs.gd.p08-loyaTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/p08-loya.app/p08-loya";
+			};
+			name = Debug;
+		};
+		AF1D7E791EC27A5100FE0BD0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = "p08-loyaTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "edu.binghamton.cs.gd.p08-loyaTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/p08-loya.app/p08-loya";
+			};
+			name = Release;
+		};
+		AF1D7E7B1EC27A5100FE0BD0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				INFOPLIST_FILE = "p08-loyaUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "edu.binghamton.cs.gd.p08-loyaUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = "p08-loya";
+			};
+			name = Debug;
+		};
+		AF1D7E7C1EC27A5100FE0BD0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				INFOPLIST_FILE = "p08-loyaUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "edu.binghamton.cs.gd.p08-loyaUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = "p08-loya";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AF1D7E411EC27A5000FE0BD0 /* Build configuration list for PBXProject "p08-loya" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AF1D7E721EC27A5100FE0BD0 /* Debug */,
+				AF1D7E731EC27A5100FE0BD0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AF1D7E741EC27A5100FE0BD0 /* Build configuration list for PBXNativeTarget "p08-loya" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AF1D7E751EC27A5100FE0BD0 /* Debug */,
+				AF1D7E761EC27A5100FE0BD0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		AF1D7E771EC27A5100FE0BD0 /* Build configuration list for PBXNativeTarget "p08-loyaTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AF1D7E781EC27A5100FE0BD0 /* Debug */,
+				AF1D7E791EC27A5100FE0BD0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		AF1D7E7A1EC27A5100FE0BD0 /* Build configuration list for PBXNativeTarget "p08-loyaUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AF1D7E7B1EC27A5100FE0BD0 /* Debug */,
+				AF1D7E7C1EC27A5100FE0BD0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = AF1D7E3E1EC27A5000FE0BD0 /* Project object */;
+}
