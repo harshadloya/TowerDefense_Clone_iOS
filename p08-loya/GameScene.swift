@@ -14,6 +14,7 @@ struct PhyCat
     static let Path : UInt32 = 0x1 << 1
     static let Enemy : UInt32 = 0x1 << 2
     static let Bullet : UInt32 = 0x1 << 3
+    static let TowerRange : UInt32 = 0x1 << 4
 }
 
 class GameScene: SKScene {
@@ -21,11 +22,21 @@ class GameScene: SKScene {
     var map = JSTileMap()
     var towerPositions = TMXObjectGroup()
     var road = TMXObjectGroup()
+    
     var towerPosArray = Array<SKSpriteNode>()
+    var towerSelected = Array<Bool>()
+    
     var defaultRange = SKShapeNode()
     
     var goldLabel = SKLabelNode()
     var gold = Int()
+    
+    var tower1 = SKSpriteNode()
+    var tower2 = SKSpriteNode()
+    var tower3 = SKSpriteNode()
+    
+    var towersOnMap = Array<SKSpriteNode>()
+    var towersOnMapAt = Array<Int>()
     
     override func didMove(to view: SKView)
     {
@@ -33,8 +44,11 @@ class GameScene: SKScene {
         map.position.y += 7
         self.addChild(map)
         
-        createPhysicsAssets()
+        //Initial Gold
+        gold = 10000
         
+        createPhysicsAssets()
+        createTowerTypesIcons()
     }
     
     func createPhysicsAssets()
@@ -95,31 +109,149 @@ class GameScene: SKScene {
             towerPosNode.zPosition = -40
             
             towerPosArray.append(towerPosNode)
+            towerSelected.append(false)
             //map.addChild(towerPosNode)
         }
     }
     
-   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?)
-   {
+    func createTowerTypesIcons()
+    {
+        tower3 = SKSpriteNode(imageNamed: "Cannon1_Icon")
+        tower3.position = CGPoint(x: self.frame.size.width - 80, y: 90)
+        tower3.zPosition = 1
+        
+        tower2 = SKSpriteNode(imageNamed: "Cannon1_Icon")
+        tower2.position.x = tower3.position.x - 160
+        tower2.position.y = tower3.position.y
+        tower2.zPosition = 1
+        
+        tower1 = SKSpriteNode(imageNamed: "Cannon1_Icon")
+        tower1.position.x = tower2.position.x - 160
+        tower1.position.y = tower2.position.y
+        tower1.zPosition = 1
+        
+        map.addChild(tower3)
+        map.addChild(tower2)
+        map.addChild(tower1)
+        
+    }
+    
+    var temp = Int()
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?)
+    {
+        
         for touch in touches
         {
-            defaultRange.removeFromParent()
-            
             let location  = touch.location(in: self)
-            for x in 0...towerPosArray2.count-1
+            
+            if tower1.contains(location)
             {
-                if towerPosArray2[x].contains(location)
+                for a in 0...towerSelected.count-1
                 {
-                    defaultRange = SKShapeNode(circleOfRadius: towerPosArray2[x].size.width + 20)
+                    if(towerSelected[a] == true && gold >= 50)
+                    {
+                        gold -= 50
+                        createTower1(At: a)
+                    }
+                }
+            }
+            if tower2.contains(location)
+            {
+                for a in 0...towerSelected.count-1
+                {
+                    if(towerSelected[a] == true && gold >= 100)
+                    {
+                        gold -= 100
+                        createTower2(At: a)
+                    }
+                }
+            }
+            if tower3.contains(location)
+            {
+                for a in 0...towerSelected.count-1
+                {
+                    if(towerSelected[a] == true && gold >= 150)
+                    {
+                        gold -= 150
+                        createTower3(At: a)
+                    }
+                }
+            }
+            
+            
+            defaultRange.removeFromParent()
+            towerSelected[temp] = false
+            
+            for x in 0...towerPosArray.count-1
+            {
+                if towerPosArray[x].contains(location)
+                {
+                    towerSelected[x] = true
+                    temp = x
+                    
+                    defaultRange = SKShapeNode(circleOfRadius: towerPosArray[x].size.width + 20)
                     defaultRange.strokeColor = SKColor.white
                     defaultRange.fillColor = UIColor(red: 169.0/255.0, green: 169.0/255.0, blue: 169.0/255.0, alpha: 0.35)
-                    defaultRange.position = towerPosArray2[x].position
+                    defaultRange.position = towerPosArray[x].position
                     
                     map.addChild(defaultRange)
                     
                 }
             }
+            
         }
+    }
+    
+    func createTower1(At: Int)
+    {
+        let tower = SKSpriteNode(imageNamed: "Cannon1_Tower")
+        tower.position = towerPosArray[At].position
+        tower.zPosition = 2
+        
+        tower.physicsBody = SKPhysicsBody(circleOfRadius: tower.size.width + 30)
+        tower.physicsBody?.affectedByGravity = false
+        tower.physicsBody?.categoryBitMask = PhyCat.TowerRange
+        tower.physicsBody?.collisionBitMask = 0
+        tower.physicsBody?.contactTestBitMask = PhyCat.Enemy
+        
+        map.addChild(tower)
+        towersOnMap.append(tower)
+        towersOnMapAt.append(At)
+    }
+    
+    func createTower2(At: Int)
+    {
+        let tower = SKSpriteNode(imageNamed: "Cannon1_Tower")
+        tower.position = towerPosArray[At].position
+        tower.zPosition = 2
+        
+        tower.physicsBody = SKPhysicsBody(circleOfRadius: tower.size.width + 30)
+        tower.physicsBody?.affectedByGravity = false
+        tower.physicsBody?.categoryBitMask = PhyCat.TowerRange
+        tower.physicsBody?.collisionBitMask = 0
+        tower.physicsBody?.contactTestBitMask = PhyCat.Enemy
+        
+        map.addChild(tower)
+        towersOnMap.append(tower)
+        towersOnMapAt.append(At)
+    }
+    
+    func createTower3(At: Int)
+    {
+        let tower = SKSpriteNode(imageNamed: "Cannon1_Tower")
+        tower.position = towerPosArray[At].position
+        tower.zPosition = 2
+        
+        tower.physicsBody = SKPhysicsBody(circleOfRadius: tower.size.width + 30)
+        tower.physicsBody?.affectedByGravity = false
+        tower.physicsBody?.categoryBitMask = PhyCat.TowerRange
+        tower.physicsBody?.collisionBitMask = 0
+        tower.physicsBody?.contactTestBitMask = PhyCat.Enemy
+        
+        map.addChild(tower)
+        towersOnMap.append(tower)
+        towersOnMapAt.append(At)
     }
     
     
