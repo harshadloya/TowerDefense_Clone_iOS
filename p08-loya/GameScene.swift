@@ -9,77 +9,103 @@
 import SpriteKit
 import GameplayKit
 
+struct PhyCat
+{
+    static let Path : UInt32 = 0x1 << 1
+    static let Enemy : UInt32 = 0x1 << 2
+    static let Bullet : UInt32 = 0x1 << 3
+}
+
 class GameScene: SKScene {
     
-    private var label : SKLabelNode?
-    private var spinnyNode : SKShapeNode?
+    var map = JSTileMap()
+    var towerPositions = TMXObjectGroup()
+    var road = TMXObjectGroup()
+    var towerPosArray = Array<CGRect>()
     
-    override func didMove(to view: SKView) {
+    
+    override func didMove(to view: SKView)
+    {
+        map = JSTileMap(named: "Level1.tmx")
+        map.position.y += 7
+        self.addChild(map)
         
-        // Get label node from scene and store it for use later
-        self.label = self.childNode(withName: "//helloLabel") as? SKLabelNode
-        if let label = self.label {
-            label.alpha = 0.0
-            label.run(SKAction.fadeIn(withDuration: 2.0))
-        }
+        createPhysicsAssets()
         
-        // Create shape node to use during mouse interaction
-        let w = (self.size.width + self.size.height) * 0.05
-        self.spinnyNode = SKShapeNode.init(rectOf: CGSize.init(width: w, height: w), cornerRadius: w * 0.3)
+    }
+    
+    func createPhysicsAssets()
+    {
+        road = map.groupNamed("Path")
         
-        if let spinnyNode = self.spinnyNode {
-            spinnyNode.lineWidth = 2.5
+        var roadArrayObjects = NSMutableArray()
+        roadArrayObjects =  road.objects
+        
+        var roadDictObj = NSDictionary()
+        var roadX = CGFloat()
+        var roadY = CGFloat()
+        var roadW = Double()
+        var roadH = Double()
+        
+        for z in 0...roadArrayObjects.count-1
+        {
+            roadDictObj = roadArrayObjects.object(at: z) as! NSDictionary
+            roadX = roadDictObj.value(forKey: "x") as! CGFloat
+            roadY = roadDictObj.value(forKey: "y") as! CGFloat
+            roadW = (roadDictObj.value(forKey: "width") as! NSString).doubleValue
+            roadH = (roadDictObj.value(forKey: "height") as! NSString).doubleValue
             
-            spinnyNode.run(SKAction.repeatForever(SKAction.rotate(byAngle: CGFloat(Double.pi), duration: 1)))
-            spinnyNode.run(SKAction.sequence([SKAction.wait(forDuration: 0.5),
-                                              SKAction.fadeOut(withDuration: 0.5),
-                                              SKAction.removeFromParent()]))
-        }
-    }
-    
-    
-    func touchDown(atPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.green
-            self.addChild(n)
-        }
-    }
-    
-    func touchMoved(toPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.blue
-            self.addChild(n)
-        }
-    }
-    
-    func touchUp(atPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.red
-            self.addChild(n)
-        }
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if let label = self.label {
-            label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
+            let roadNode = SKSpriteNode(color: SKColor.clear, size: CGSize(width: roadW, height: roadH))
+            roadNode.position = CGPoint(x: roadX + CGFloat(roadW / 2.0), y: roadY + 20)
+            roadNode.zPosition = -40
+            
+            roadNode.physicsBody = SKPhysicsBody(rectangleOf: roadNode.size)
+            roadNode.physicsBody?.isDynamic = false
+            roadNode.physicsBody?.categoryBitMask = PhyCat.Path
+            roadNode.physicsBody?.collisionBitMask = PhyCat.Enemy
+            roadNode.physicsBody?.contactTestBitMask = 0
+            
+            map.addChild(roadNode)
         }
         
-        for t in touches { self.touchDown(atPoint: t.location(in: self)) }
+        towerPositions = map.groupNamed("TowerPos")
+        
+        var towerPosArrayObjects = NSMutableArray()
+        towerPosArrayObjects =  towerPositions.objects
+        
+        var towerPosDictObj = NSDictionary()
+        var towerPosX = CGFloat()
+        var towerPosY = CGFloat()
+        var towerPosW = Double()
+        var towerPosH = Double()
+        
+        for z in 0...towerPosArrayObjects.count-1
+        {
+            towerPosDictObj = towerPosArrayObjects.object(at: z) as! NSDictionary
+            towerPosX = towerPosDictObj.value(forKey: "x") as! CGFloat
+            towerPosY = towerPosDictObj.value(forKey: "y") as! CGFloat
+            towerPosW = (towerPosDictObj.value(forKey: "width") as! NSString).doubleValue
+            towerPosH = (towerPosDictObj.value(forKey: "height") as! NSString).doubleValue
+            
+            /*
+            let towerPosNode = SKSpriteNode(color: SKColor.clear, size: CGSize(width: towerPosW, height: towerPosH))
+            towerPosNode.position = CGPoint(x: towerPosX + CGFloat(towerPosW / 2.0), y: towerPosY + 30)
+            towerPosNode.zPosition = -40
+            
+            towerPosNode.physicsBody = SKPhysicsBody(rectangleOf: towerPosNode.size)
+            towerPosNode.physicsBody?.isDynamic = false
+            towerPosNode.physicsBody?.categoryBitMask = PhyCat.Path
+            towerPosNode.physicsBody?.collisionBitMask = PhyCat.Enemy
+            towerPosNode.physicsBody?.contactTestBitMask = 0
+            */
+            
+            towerPosArray.append(CGRect(x: Double(towerPosX) + towerPosW / 2.0, y: Double(towerPosY) + 30, width: towerPosW, height: towerPosH))
+            
+            //map.addChild(towerPosNode)
+        }
     }
     
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchMoved(toPoint: t.location(in: self)) }
-    }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
-    }
-    
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
+   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
     }
     
     
