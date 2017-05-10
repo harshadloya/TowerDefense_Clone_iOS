@@ -425,7 +425,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             {
                 for j in 0...self.numberOfEnemies-1
                 {
-                    let enemy = map.childNode(withName: "Orc1_\(j)")
+                    let enemy = map.childNode(withName: "Orc1_\(self.numberOfEnemies-1-j)")
                     let location = enemy?.position
                     
                     //Aim
@@ -435,28 +435,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         let dy = (location?.y)! - towersOnMap[i].position.y
                         let angle = atan2(dy, dx)
                         
-                        towersOnMap[i].zRotation = angle
-                        //print(angle)
+                        towersOnMap[i].zRotation = angle - CGFloat(GLKMathDegreesToRadians(90))
                         break
 
                     }
                 }
-                
-                
-                /*
-                 if(angle <= 2.9 && angle > 2.8){
-                 towersOnMap[i].texture = SKTexture(imageNamed: "canon_1")
-                 }
-                 if(angle <= 2.8 && angle > 0.4){
-                 towersOnMap[i].texture = SKTexture(imageNamed: "canon_2")
-                 }
-                 if(angle <= 2.1 && angle > 1.1){
-                 towersOnMap[i].texture = SKTexture(imageNamed: "canon_3")
-                 }
-                 if(angle <= 1.1){
-                 towersOnMap[i].texture = SKTexture(imageNamed: "canon_4")
-                 }
-                 */
             }
         }
         
