@@ -52,12 +52,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(map)
         
         //Initial Gold
-        gold = 10000
+        gold = 100
         wavesCount = 1
         
-        createPhysicsAssets()
-        createTowerTypesIcons()
-        
+        self.createPhysicsAssets()
+        self.createTowerTypesIcons()
+        self.createLabel()
         
         
         
@@ -364,6 +364,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if (firstObj.categoryBitMask == PhyCat.TowerRange && secondObj.categoryBitMask == PhyCat.Enemy)
         {
             let tempNode = secondObj.node
+            
             if bulletFired == false
             {
                 bulletFired = true
@@ -383,6 +384,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         else if (firstObj.categoryBitMask == PhyCat.Enemy && secondObj.categoryBitMask == PhyCat.TowerRange)
         {
             let tempNode = firstObj.node
+            
             if bulletFired == false
             {
                 bulletFired = true
@@ -416,8 +418,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    func createLabel()
+    {
+        goldLabel = SKLabelNode(text: "Gold: \(gold)")
+        goldLabel.position = CGPoint(x: self.frame.size.width / 2, y: self.frame.size.height / 2 + self.frame.size.height / 2.5)
+        goldLabel.fontColor = SKColor.black
+        goldLabel.fontSize = 50
+        goldLabel.zPosition = 10
+        map.addChild(goldLabel)
+    }
+    
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
+        
+        goldLabel.text = "Gold: \(gold)"
         
         if(!towersOnMap.isEmpty)
         {
@@ -433,15 +447,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     {
                         let dx = (location?.x)! - towersOnMap[i].position.x
                         let dy = (location?.y)! - towersOnMap[i].position.y
+                        
                         let angle = atan2(dy, dx)
                         
                         towersOnMap[i].zRotation = angle - CGFloat(GLKMathDegreesToRadians(90))
                         break
-
                     }
+        
                 }
             }
         }
-        
     }
 }
