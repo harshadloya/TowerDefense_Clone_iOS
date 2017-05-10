@@ -40,6 +40,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var wavesCount = Int()
     
     var bullet = SKShapeNode()
+    var bulletFired = Bool()
+    var numberOfEnemies = Int()
     
     override func didMove(to view: SKView)
     {
@@ -51,16 +53,39 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //Initial Gold
         gold = 10000
-        wavesCount = 5
+        wavesCount = 1
         
         createPhysicsAssets()
         createTowerTypesIcons()
-        var numberOfEnemies = 5
+        
+        
+        
+        
         let spawn = SKAction.run{
             () in
             
-            self.createEnemies(No: numberOfEnemies)
-            numberOfEnemies += 1
+            if(self.wavesCount == 1)
+            {
+                self.numberOfEnemies = 5
+            }
+            else if(self.wavesCount == 2)
+            {
+                self.numberOfEnemies = 6
+            }
+            else if(self.wavesCount == 3)
+            {
+                self.numberOfEnemies = 7
+            }
+            else if(self.wavesCount == 4)
+            {
+                self.numberOfEnemies = 8
+            }
+            else if(self.wavesCount == 5)
+            {
+                self.numberOfEnemies = 9
+            }
+            
+            self.createEnemies(No: self.numberOfEnemies)
         }
         
         let delay = SKAction.wait(forDuration:20, withRange: 5)
@@ -137,11 +162,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func createTowerTypesIcons()
     {
-        tower3 = SKSpriteNode(imageNamed: "Cannon1_Icon")
+        tower3 = SKSpriteNode(imageNamed: "Cannon3_Icon")
         tower3.position = CGPoint(x: self.frame.size.width - 80, y: 90)
         tower3.zPosition = 1
         
-        tower2 = SKSpriteNode(imageNamed: "Cannon1_Icon")
+        tower2 = SKSpriteNode(imageNamed: "Cannon2_Icon")
         tower2.position.x = tower3.position.x - 160
         tower2.position.y = tower3.position.y
         tower2.zPosition = 1
@@ -243,7 +268,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func createTower2(At: Int)
     {
-        let tower = SKSpriteNode(imageNamed: "Cannon1_Tower")
+        let tower = SKSpriteNode(imageNamed: "Cannon2_Tower")
         tower.position = towerPosArray[At].position
         tower.zPosition = 2
         
@@ -260,7 +285,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func createTower3(At: Int)
     {
-        let tower = SKSpriteNode(imageNamed: "Cannon1_Tower")
+        let tower = SKSpriteNode(imageNamed: "Cannon3_Tower")
         tower.position = towerPosArray[At].position
         tower.zPosition = 2
         
@@ -281,9 +306,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         for i in 0...No-1
         {
             enemy = SKSpriteNode(imageNamed: "Orc1_Walk_000")
+            enemy.name = "Orc1_\(i)"
             let path = map.childNode(withName: "Path")
             enemy.position.y = (path?.position.y)! + 32
-            enemy.position.x = CGFloat(i) * enemy.size.width*0.09 / 2 - 375
+            enemy.position.x = CGFloat(i) * enemy.size.width*0.09 / 1.1 - 550
+            
             enemy.zPosition = 2
             enemy.setScale(0.09)
             
@@ -305,13 +332,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 enemy1Array.append(SKTexture(imageNamed: Name))
             }
             enemy.run(SKAction.repeatForever(SKAction.animate(with: enemy1Array, timePerFrame: 0.16)))
-            enemy.run(SKAction.sequence([SKAction.moveBy(x: self.frame.size.width + CGFloat(i) * enemy.size.width*0.09 / 2 + 400, y: 0, duration: 30), SKAction.removeFromParent()]))
+            enemy.run(SKAction.sequence([SKAction.moveBy(x: self.frame.size.width + CGFloat(i) * enemy.size.width*0.09 / 1.1 + 600, y: 0, duration: 30), SKAction.removeFromParent()]))
             
             map.addChild(enemy)
         }
     }
     
-    func createAndFireBullet() -> SKShapeNode
+    func createBullet() -> SKShapeNode
     {
         bullet = SKShapeNode(circleOfRadius: 5)
         bullet.fillColor = SKColor.black
@@ -336,36 +363,102 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if (firstObj.categoryBitMask == PhyCat.TowerRange && secondObj.categoryBitMask == PhyCat.Enemy)
         {
-            let tempBullet = self.createAndFireBullet()
-            tempBullet.position = (firstObj.node?.position)!
-            map.addChild(tempBullet)
+            let tempNode = secondObj.node
+            if bulletFired == false
+            {
+                bulletFired = true
+                
+                let tempBullet = self.createBullet()
+                tempBullet.position = (firstObj.node?.position)!
+                map.addChild(tempBullet)
+                
+                
+                let move = SKAction.move(to: CGPoint(x: (tempNode?.position.x)!, y: (tempNode?.position.y)!), duration: 2)
+                let remove = SKAction.removeFromParent()
+                let fire = SKAction.sequence([move, remove])
+                bullet.run(fire)
+            }
             
-            let move = SKAction.move(to: CGPoint(x: (secondObj.node?.position.x)!, y: (secondObj.node?.position.y)!), duration: 3)
-            let remove = SKAction.removeFromParent()
-            let fire = SKAction.sequence([move, remove])
-            bullet.run(fire)
         }
         else if (firstObj.categoryBitMask == PhyCat.Enemy && secondObj.categoryBitMask == PhyCat.TowerRange)
         {
-            let tempBullet = self.createAndFireBullet()
-            tempBullet.position = (secondObj.node?.position)!
-            map.addChild(tempBullet)
-            
-            let move = SKAction.move(to: CGPoint(x: (firstObj.node?.position.x)!, y: (firstObj.node?.position.y)!), duration: 3)
-            let remove = SKAction.removeFromParent()
-            let fire = SKAction.sequence([move, remove])
-            bullet.run(fire)
+            let tempNode = firstObj.node
+            if bulletFired == false
+            {
+                bulletFired = true
+                
+                let tempBullet = self.createBullet()
+                tempBullet.position = (secondObj.node?.position)!
+                map.addChild(tempBullet)
+                
+                
+                let move = SKAction.move(to: CGPoint(x: (tempNode?.position.x)!, y: (tempNode?.position.y)!), duration: 2)
+                let remove = SKAction.removeFromParent()
+                let fire = SKAction.sequence([move, remove, SKAction.run {self.bulletFired = false}])
+                bullet.run(fire)
+            }
         }
         
-        if (firstObj.categoryBitMask == PhyCat.Enemy && secondObj.categoryBitMask == PhyCat.Bullet) || (firstObj.categoryBitMask == PhyCat.Bullet && secondObj.categoryBitMask == PhyCat.Enemy)
+        if (firstObj.categoryBitMask == PhyCat.Enemy && secondObj.categoryBitMask == PhyCat.Bullet)
         {
             firstObj.node?.removeFromParent()
             secondObj.node?.removeFromParent()
             gold += 10
+            bulletFired = false
+            
+        }
+        else if (firstObj.categoryBitMask == PhyCat.Bullet && secondObj.categoryBitMask == PhyCat.Enemy)
+        {
+            firstObj.node?.removeFromParent()
+            secondObj.node?.removeFromParent()
+            gold += 10
+            bulletFired = false
         }
     }
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
+        
+        if(!towersOnMap.isEmpty)
+        {
+            for i in 0...towersOnMap.count - 1
+            {
+                for j in 0...self.numberOfEnemies-1
+                {
+                    let enemy = map.childNode(withName: "Orc1_\(j)")
+                    let location = enemy?.position
+                    
+                    //Aim
+                    if(location != nil)
+                    {
+                        let dx = (location?.x)! - towersOnMap[i].position.x
+                        let dy = (location?.y)! - towersOnMap[i].position.y
+                        let angle = atan2(dy, dx)
+                        
+                        towersOnMap[i].zRotation = angle
+                        //print(angle)
+                        break
+
+                    }
+                }
+                
+                
+                /*
+                 if(angle <= 2.9 && angle > 2.8){
+                 towersOnMap[i].texture = SKTexture(imageNamed: "canon_1")
+                 }
+                 if(angle <= 2.8 && angle > 0.4){
+                 towersOnMap[i].texture = SKTexture(imageNamed: "canon_2")
+                 }
+                 if(angle <= 2.1 && angle > 1.1){
+                 towersOnMap[i].texture = SKTexture(imageNamed: "canon_3")
+                 }
+                 if(angle <= 1.1){
+                 towersOnMap[i].texture = SKTexture(imageNamed: "canon_4")
+                 }
+                 */
+            }
+        }
+        
     }
 }
