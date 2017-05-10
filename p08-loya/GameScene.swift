@@ -17,7 +17,7 @@ struct PhyCat
     static let TowerRange : UInt32 = 0x1 << 4
 }
 
-class GameScene: SKScene {
+class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var map = JSTileMap()
     var towerPositions = TMXObjectGroup()
@@ -37,18 +37,39 @@ class GameScene: SKScene {
     
     var towersOnMap = Array<SKSpriteNode>()
     var towersOnMapAt = Array<Int>()
+    var wavesCount = Int()
+    
+    var bullet = SKShapeNode()
     
     override func didMove(to view: SKView)
     {
+        self.physicsWorld.contactDelegate = self
+        
         map = JSTileMap(named: "Level1.tmx")
         map.position.y += 7
         self.addChild(map)
         
         //Initial Gold
         gold = 10000
+        wavesCount = 5
         
         createPhysicsAssets()
         createTowerTypesIcons()
+        var numberOfEnemies = 5
+        let spawn = SKAction.run{
+            () in
+            
+            self.createEnemies(No: numberOfEnemies)
+            numberOfEnemies += 1
+        }
+        
+        let delay = SKAction.wait(forDuration:20, withRange: 5)
+        let SpawnDelay = SKAction.sequence([spawn, delay])
+        
+        //for _ in 1...wavesCount
+        //{
+            self.run(SpawnDelay)
+        //}
     }
     
     func createPhysicsAssets()
@@ -79,9 +100,9 @@ class GameScene: SKScene {
             roadNode.physicsBody = SKPhysicsBody(rectangleOf: roadNode.size)
             roadNode.physicsBody?.isDynamic = false
             roadNode.physicsBody?.categoryBitMask = PhyCat.Path
-            roadNode.physicsBody?.collisionBitMask = PhyCat.Enemy
+            roadNode.physicsBody?.collisionBitMask = 0
             roadNode.physicsBody?.contactTestBitMask = 0
-            
+            roadNode.name = "Path"
             map.addChild(roadNode)
         }
         
@@ -254,6 +275,95 @@ class GameScene: SKScene {
         towersOnMapAt.append(At)
     }
     
+    func createEnemies(No: Int)
+    {
+        var enemy = SKSpriteNode(imageNamed: "Orc1_Walk_000")
+        for i in 0...No-1
+        {
+            enemy = SKSpriteNode(imageNamed: "Orc1_Walk_000")
+            let path = map.childNode(withName: "Path")
+            enemy.position.y = (path?.position.y)! + 32
+            enemy.position.x = CGFloat(i) * enemy.size.width*0.09 / 2 - 375
+            enemy.zPosition = 2
+            enemy.setScale(0.09)
+            
+            enemy.physicsBody = SKPhysicsBody(rectangleOf: enemy.size)
+            enemy.physicsBody?.affectedByGravity = false
+            enemy.physicsBody?.categoryBitMask = PhyCat.Enemy
+            enemy.physicsBody?.collisionBitMask = 0
+            enemy.physicsBody?.contactTestBitMask = PhyCat.Bullet | PhyCat.TowerRange
+            enemy.physicsBody?.isDynamic = false
+            enemy.physicsBody?.allowsRotation = false
+            
+            var enemy1 = SKTextureAtlas()
+            var enemy1Array = [SKTexture]()
+            
+            enemy1 = SKTextureAtlas(named: "Orc1_Walk.atlas")
+            for i in 0...enemy1.textureNames.count-1
+            {
+                let Name = "Orc1_Walk_00\(i).png"
+                enemy1Array.append(SKTexture(imageNamed: Name))
+            }
+            enemy.run(SKAction.repeatForever(SKAction.animate(with: enemy1Array, timePerFrame: 0.16)))
+            enemy.run(SKAction.sequence([SKAction.moveBy(x: self.frame.size.width + CGFloat(i) * enemy.size.width*0.09 / 2 + 400, y: 0, duration: 30), SKAction.removeFromParent()]))
+            
+            map.addChild(enemy)
+        }
+    }
+    
+    func createAndFireBullet() -> SKShapeNode
+    {
+        bullet = SKShapeNode(circleOfRadius: 5)
+        bullet.fillColor = SKColor.black
+        bullet.position = CGPoint(x: tower1.position.x + tower1.size.width - 9, y: tower1.position.y + 2)
+        bullet.zPosition = 1
+        bullet.physicsBody = SKPhysicsBody(circleOfRadius: 5)
+        bullet.physicsBody?.usesPreciseCollisionDetection = true
+        bullet.physicsBody?.categoryBitMask = PhyCat.Bullet
+        bullet.physicsBody?.collisionBitMask = 0
+        bullet.physicsBody?.contactTestBitMask = PhyCat.Enemy
+        bullet.physicsBody?.isDynamic = true
+        bullet.physicsBody?.affectedByGravity = false
+        
+        return bullet
+        
+    }
+    
+    func didBegin(_ contact: SKPhysicsContact) {
+        
+        let firstObj = contact.bodyA
+        let secondObj = contact.bodyB
+        
+        if (firstObj.categoryBitMask == PhyCat.TowerRange && secondObj.categoryBitMask == PhyCat.Enemy)
+        {
+            let tempBullet = self.createAndFireBullet()
+            tempBullet.position = (firstObj.node?.position)!
+            map.addChild(tempBullet)
+            
+            let move = SKAction.move(to: CGPoint(x: (secondObj.node?.position.x)!, y: (secondObj.node?.position.y)!), duration: 3)
+            let remove = SKAction.removeFromParent()
+            let fire = SKAction.sequence([move, remove])
+            bullet.run(fire)
+        }
+        else if (firstObj.categoryBitMask == PhyCat.Enemy && secondObj.categoryBitMask == PhyCat.TowerRange)
+        {
+            let tempBullet = self.createAndFireBullet()
+            tempBullet.position = (secondObj.node?.position)!
+            map.addChild(tempBullet)
+            
+            let move = SKAction.move(to: CGPoint(x: (firstObj.node?.position.x)!, y: (firstObj.node?.position.y)!), duration: 3)
+            let remove = SKAction.removeFromParent()
+            let fire = SKAction.sequence([move, remove])
+            bullet.run(fire)
+        }
+        
+        if (firstObj.categoryBitMask == PhyCat.Enemy && secondObj.categoryBitMask == PhyCat.Bullet) || (firstObj.categoryBitMask == PhyCat.Bullet && secondObj.categoryBitMask == PhyCat.Enemy)
+        {
+            firstObj.node?.removeFromParent()
+            secondObj.node?.removeFromParent()
+            gold += 10
+        }
+    }
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
