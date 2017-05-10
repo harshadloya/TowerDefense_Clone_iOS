@@ -21,8 +21,11 @@ class GameScene: SKScene {
     var map = JSTileMap()
     var towerPositions = TMXObjectGroup()
     var road = TMXObjectGroup()
-    var towerPosArray = Array<CGRect>()
+    var towerPosArray = Array<SKSpriteNode>()
+    var defaultRange = SKShapeNode()
     
+    var goldLabel = SKLabelNode()
+    var gold = Int()
     
     override func didMove(to view: SKView)
     {
@@ -87,25 +90,36 @@ class GameScene: SKScene {
             towerPosW = (towerPosDictObj.value(forKey: "width") as! NSString).doubleValue
             towerPosH = (towerPosDictObj.value(forKey: "height") as! NSString).doubleValue
             
-            /*
             let towerPosNode = SKSpriteNode(color: SKColor.clear, size: CGSize(width: towerPosW, height: towerPosH))
             towerPosNode.position = CGPoint(x: towerPosX + CGFloat(towerPosW / 2.0), y: towerPosY + 30)
             towerPosNode.zPosition = -40
             
-            towerPosNode.physicsBody = SKPhysicsBody(rectangleOf: towerPosNode.size)
-            towerPosNode.physicsBody?.isDynamic = false
-            towerPosNode.physicsBody?.categoryBitMask = PhyCat.Path
-            towerPosNode.physicsBody?.collisionBitMask = PhyCat.Enemy
-            towerPosNode.physicsBody?.contactTestBitMask = 0
-            */
-            
-            towerPosArray.append(CGRect(x: Double(towerPosX) + towerPosW / 2.0, y: Double(towerPosY) + 30, width: towerPosW, height: towerPosH))
-            
+            towerPosArray.append(towerPosNode)
             //map.addChild(towerPosNode)
         }
     }
     
-   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?)
+   {
+        for touch in touches
+        {
+            defaultRange.removeFromParent()
+            
+            let location  = touch.location(in: self)
+            for x in 0...towerPosArray2.count-1
+            {
+                if towerPosArray2[x].contains(location)
+                {
+                    defaultRange = SKShapeNode(circleOfRadius: towerPosArray2[x].size.width + 20)
+                    defaultRange.strokeColor = SKColor.white
+                    defaultRange.fillColor = UIColor(red: 169.0/255.0, green: 169.0/255.0, blue: 169.0/255.0, alpha: 0.35)
+                    defaultRange.position = towerPosArray2[x].position
+                    
+                    map.addChild(defaultRange)
+                    
+                }
+            }
+        }
     }
     
     
