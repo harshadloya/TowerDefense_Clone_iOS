@@ -1,7 +1,7 @@
 # README #
 
 ## Description ##
-This repository contains project8 - ###A Tower Defense Game### for game development course.
+This repository contains project8 - **A Tower Defense Game** for game development course.
 
 ## Platform Details ##
 
