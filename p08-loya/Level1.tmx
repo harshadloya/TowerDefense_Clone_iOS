@@ -21,7 +21,7 @@
  </objectgroup>
  <layer name="TowerSpot" width="40" height="22">
   <data encoding="base64" compression="zlib">
-   eJzt00sKACAIRVHBFffZPzV0FBZiRPdM9CHoSBEA+FdRkarnOWLHKrdZu5nt5ogdnhtANvsnnj472z/x9DcygDcNHO4mjw==
+   eJzt0ysKADAMBNFATtzP/WlNoSIxYaGi81wi1o0ZAPyruVn3+q3YiDaPsf/T67diI9oEXru7yRpSt1ltN2tI3SbtAn9YyQkhDQ==
   </data>
  </layer>
  <objectgroup name="TowerPos">
@@ -52,16 +52,10 @@
   <object id="11" x="1089.33" y="258.667" width="62.6667" height="60">
    <ellipse/>
   </object>
-  <object id="12" x="1216" y="256" width="61.3333" height="62.6667">
-   <ellipse/>
-  </object>
   <object id="13" x="-1.33333" y="448" width="65.3333" height="62.6667">
    <ellipse/>
   </object>
   <object id="14" x="97.3333" y="446.667" width="62.6667" height="58.6667">
-   <ellipse/>
-  </object>
-  <object id="15" x="194" y="454.667" width="62.6667" height="58.6667">
    <ellipse/>
   </object>
   <object id="19" x="288.667" y="448" width="62.6667" height="58.6667">
@@ -83,9 +77,6 @@
    <ellipse/>
   </object>
   <object id="25" x="1059.33" y="449.333" width="62.6667" height="58.6667">
-   <ellipse/>
-  </object>
-  <object id="26" x="1179.33" y="448" width="62.6667" height="58.6667">
    <ellipse/>
   </object>
  </objectgroup>
