@@ -15,6 +15,7 @@ struct PhyCat
     static let Enemy : UInt32 = 0x1 << 2
     static let Bullet : UInt32 = 0x1 << 3
     static let TowerRange : UInt32 = 0x1 << 4
+    static let Castle : UInt32 = 0x1 << 5
 }
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
@@ -55,6 +56,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var enemyToBeRemoved = Int()
     var enemySize = CGFloat()
     var tempD = CGFloat()
+    
+    var townCastle = SKSpriteNode()
 
     
     override func didMove(to view: SKView)
@@ -219,6 +222,31 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             towerSelected.append(false)
             //map.addChild(towerPosNode)
         }
+        
+        townCastle = SKSpriteNode(imageNamed: "Castle")
+        townCastle.setScale(0.65)
+        let path = map.childNode(withName: "Path")
+        townCastle.position = CGPoint(x: self.frame.width - townCastle.frame.size.width * (0.65) / 4, y: (path?.position.y)! + 105.0)
+        townCastle.zPosition = 1
+        
+        print(townCastle.frame.size.width * (0.65))
+        print(townCastle.frame.size.width * (1.5))
+        print(townCastle.position)
+        
+        let tempS = SKShapeNode(circleOfRadius: townCastle.size.width / 2 - 100)
+        tempS.position = townCastle.position
+        tempS.zPosition = 100
+        map.addChild(tempS)
+        
+        //townCastle.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: townCastle.frame.size.width, height: self.frame.size.height))
+        townCastle.physicsBody = SKPhysicsBody(circleOfRadius: townCastle.size.width / 2 - 100)
+        townCastle.physicsBody?.categoryBitMask = PhyCat.Castle
+        townCastle.physicsBody?.collisionBitMask = 0
+        townCastle.physicsBody?.contactTestBitMask = PhyCat.Enemy
+        townCastle.physicsBody?.affectedByGravity = false
+
+        
+        map.addChild(townCastle)
     }
     
     func createTowerTypesIcons()
@@ -374,8 +402,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             enemy.position.y = (path?.position.y)! + 32
             enemy.position.x = CGFloat(i) * enemy.size.width*0.09 / 1.1 - Dist
             
-            print(enemy.position.x)
-            
             enemy.zPosition = 2
             enemy.setScale(0.09)
             
@@ -383,7 +409,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             enemy.physicsBody?.affectedByGravity = false
             enemy.physicsBody?.categoryBitMask = PhyCat.Enemy
             enemy.physicsBody?.collisionBitMask = 0
-            enemy.physicsBody?.contactTestBitMask = PhyCat.Bullet | PhyCat.TowerRange
+            enemy.physicsBody?.contactTestBitMask = PhyCat.Bullet | PhyCat.TowerRange | PhyCat.Castle
             enemy.physicsBody?.isDynamic = false
             enemy.physicsBody?.allowsRotation = false
             
@@ -420,8 +446,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             enemy.position.y = (path?.position.y)! + 32
             enemy.position.x = CGFloat(i) * enemy.size.width*0.09 / 1.1 - Dist
             
-            print(enemy.position.x)
-            
             enemy.zPosition = 2
             enemy.setScale(0.09)
             
@@ -429,7 +453,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             enemy.physicsBody?.affectedByGravity = false
             enemy.physicsBody?.categoryBitMask = PhyCat.Enemy
             enemy.physicsBody?.collisionBitMask = 0
-            enemy.physicsBody?.contactTestBitMask = PhyCat.Bullet | PhyCat.TowerRange
+            enemy.physicsBody?.contactTestBitMask = PhyCat.Bullet | PhyCat.TowerRange | PhyCat.Castle
             enemy.physicsBody?.isDynamic = false
             enemy.physicsBody?.allowsRotation = false
             
@@ -463,8 +487,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             enemy.position.y = (path?.position.y)! + 32
             enemy.position.x = CGFloat(i) * enemy.size.width*0.09 / 1.1 - Dist
             
-            print(enemy.position.x)
-            
             enemy.zPosition = 2
             enemy.setScale(0.09)
             
@@ -472,7 +494,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             enemy.physicsBody?.affectedByGravity = false
             enemy.physicsBody?.categoryBitMask = PhyCat.Enemy
             enemy.physicsBody?.collisionBitMask = 0
-            enemy.physicsBody?.contactTestBitMask = PhyCat.Bullet | PhyCat.TowerRange
+            enemy.physicsBody?.contactTestBitMask = PhyCat.Bullet | PhyCat.TowerRange | PhyCat.Castle
             enemy.physicsBody?.isDynamic = false
             enemy.physicsBody?.allowsRotation = false
             
@@ -589,16 +611,55 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             enemiesOnMap.remove(at: enemyToBeRemoved)
         }
+        
+        if (firstObj.categoryBitMask == PhyCat.Enemy && secondObj.categoryBitMask == PhyCat.Castle)
+        {
+            firstObj.node?.removeFromParent()
+            townHealth -= 1
+            print(townHealth)
+            
+            for x in 0...enemiesOnMap.count-1
+            {
+                if firstObj.node == enemiesOnMap[x].0
+                {
+                    enemyToBeRemoved = x
+                }
+            }
+            enemiesOnMap.remove(at: enemyToBeRemoved)
+        }
+        else if (firstObj.categoryBitMask == PhyCat.Bullet && secondObj.categoryBitMask == PhyCat.Enemy)
+        {
+            secondObj.node?.removeFromParent()
+            townHealth -= 1
+            print(townHealth)
+            
+            for x in 0...enemiesOnMap.count-1
+            {
+                if secondObj.node == enemiesOnMap[x].0
+                {
+                    enemyToBeRemoved = x
+                }
+            }
+            enemiesOnMap.remove(at: enemyToBeRemoved)
+        }
     }
     
     func gameWin()
     {
-        print("Game Win")
+        if(self.townHealth >= 1)
+        {
+            print("Game Win")
+            spawnTimer.invalidate()
+        }
     }
     
     func gameLoose()
     {
-        print("Game Loose")
+        if(self.townHealth <= 0)
+        {
+            print("Game Loose")
+            spawnTimer.invalidate()
+        }
     }
     
     func createLabel()
@@ -615,6 +676,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // Called before each frame is rendered
         
         goldLabel.text = "Gold: \(gold)"
+        
+        //Check if Player Lost
+        self.gameLoose()
         
         if(!towersOnMap.isEmpty)
         {
@@ -640,5 +704,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
             }
         }
+        
     }
 }
