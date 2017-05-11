@@ -59,8 +59,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var townCastle = SKSpriteNode()
 
+    var gameWinOrLoose = Bool()
+    var restartBtn = SKSpriteNode()
+    var exitBtn = SKSpriteNode()
+    
+    var waveNumberLabel = SKLabelNode()
     
     override func didMove(to view: SKView)
+    {
+        self.startGame()
+    }
+    
+    func startGame()
     {
         self.physicsWorld.contactDelegate = self
         
@@ -69,69 +79,87 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(map)
         
         //Initial Gold
-        gold = 1000
-        wavesCount = 5
+        gold = 100
+        wavesCount = 1
         timeIntervalInWaveSpawns = 35
         townHealth = 10
+        gameWinOrLoose = false
         
         self.createPhysicsAssets()
         self.createTowerTypesIcons()
         self.createLabel()
         
         
-        
         let spawn = SKAction.run{
             () in
-            
-            if(self.wavesCount == 1)
+            if(!self.gameWinOrLoose)
             {
-                let d = CGFloat(550.0)
-                self.tempD = d + 50.0
+                self.waveNumberLabel = SKLabelNode(text: "Wave \(self.wavesCount)")
+                self.waveNumberLabel.position = CGPoint(x: -50, y: self.frame.size.height / 2)
+                self.waveNumberLabel.zPosition = 10
+                self.waveNumberLabel.fontSize = 50
+                self.waveNumberLabel.fontName = "Oetztype"
+                self.waveNumberLabel.fontColor = SKColor.black
+                self.waveNumberLabel.color = SKColor.white
+                self.map.addChild(self.waveNumberLabel)
                 
-                self.numberOfEnemies = 5
-                self.createEnemy1(No: self.numberOfEnemies, Dist: d)
-            }
-            else if(self.wavesCount == 2)
-            {
-                let d = CGFloat(750.0)
-                self.tempD = d + 50.0
+                let waveNoAnim = SKAction.move(to: CGPoint(x: self.frame.size.width / 2, y: self.frame.size.height / 2), duration: 3)
+                let waveNoAnim2 = SKAction.fadeOut(withDuration: 3.5)
+                self.waveNumberLabel.run(SKAction.sequence([waveNoAnim, waveNoAnim2, SKAction.removeFromParent()]), completion:{ () -> Void in
+                    
+                        
+                        if(self.wavesCount == 1)
+                        {
+                            let d = CGFloat(550.0)
+                            self.tempD = d + 50.0
+                            
+                            self.numberOfEnemies = 5
+                            self.createEnemy1(No: self.numberOfEnemies, Dist: d)
+                        }
+                        else if(self.wavesCount == 2)
+                        {
+                            let d = CGFloat(750.0)
+                            self.tempD = d + 50.0
+                            
+                            self.numberOfEnemies = 6
+                            self.createEnemy2(No: self.numberOfEnemies, Dist: d)
+                        }
+                        else if(self.wavesCount == 3)
+                        {
+                            let d = CGFloat(850.0)
+                            self.tempD = d + 50.0
+                            
+                            self.numberOfEnemies = 7
+                            self.createEnemy3(No: self.numberOfEnemies, Dist: d)
+                        }
+                        else if(self.wavesCount == 4)
+                        {
+                            let d = CGFloat(1050.0)
+                            self.tempD = d + 50.0
+                            
+                            self.numberOfEnemies = 8
+                            self.createEnemy1(No: self.numberOfEnemies-5, Dist: d)
+                            self.createEnemy2(No: self.numberOfEnemies-4, Dist: -(self.enemySize*3 - d))
+                            self.createEnemy3(No: self.numberOfEnemies-7, Dist: -(self.enemySize*7 - d))
+                        }
+                        else if(self.wavesCount == 5)
+                        {
+                            let d = CGFloat(1150.0)
+                            self.tempD = d + 50.0
+                            
+                            self.numberOfEnemies = 9
+                            self.createEnemy1(No: self.numberOfEnemies-7, Dist: d)
+                            self.createEnemy2(No: self.numberOfEnemies-6, Dist: -(self.enemySize*2 - d))
+                            self.createEnemy3(No: self.numberOfEnemies-4, Dist: -(self.enemySize*5 - d))
+                        }
+                        
+                        
+                        for x in 0...self.numberOfEnemies-1
+                        {
+                            self.map.addChild(self.enemiesOnMap[x].0)
+                        }
+                    })
                 
-                self.numberOfEnemies = 6
-                self.createEnemy2(No: self.numberOfEnemies, Dist: d)
-            }
-            else if(self.wavesCount == 3)
-            {
-                let d = CGFloat(850.0)
-                self.tempD = d + 50.0
-                
-                self.numberOfEnemies = 7
-                self.createEnemy3(No: self.numberOfEnemies, Dist: d)
-            }
-            else if(self.wavesCount == 4)
-            {
-                let d = CGFloat(1050.0)
-                self.tempD = d + 50.0
-                
-                self.numberOfEnemies = 8
-                self.createEnemy1(No: self.numberOfEnemies-5, Dist: d)
-                self.createEnemy2(No: self.numberOfEnemies-4, Dist: -(self.enemySize*3 - d))
-                self.createEnemy3(No: self.numberOfEnemies-7, Dist: -(self.enemySize*7 - d))
-            }
-            else if(self.wavesCount == 5)
-            {
-                let d = CGFloat(1150.0)
-                self.tempD = d + 50.0
-                
-                self.numberOfEnemies = 9
-                self.createEnemy1(No: self.numberOfEnemies-7, Dist: d)
-                self.createEnemy2(No: self.numberOfEnemies-6, Dist: -(self.enemySize*2 - d))
-                self.createEnemy3(No: self.numberOfEnemies-4, Dist: -(self.enemySize*5 - d))
-            }
-            
-            
-            for x in 0...self.numberOfEnemies-1
-            {
-                self.map.addChild(self.enemiesOnMap[x].0)
             }
         }
         
@@ -149,8 +177,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
            self.run(SpawnEnemy)
             timeIntervalInWaveSpawns = 35
             wavesCount += 1
-            
-            print(wavesCount)
             
             if wavesCount >= 6
             {
@@ -229,6 +255,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         townCastle.position = CGPoint(x: self.frame.width - townCastle.frame.size.width * (0.65) / 4, y: (path?.position.y)! + 105.0)
         townCastle.zPosition = 1
         
+        /*
         print(townCastle.frame.size.width * (0.65))
         print(townCastle.frame.size.width * (1.5))
         print(townCastle.position)
@@ -237,9 +264,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         tempS.position = townCastle.position
         tempS.zPosition = 100
         map.addChild(tempS)
+        */
         
         //townCastle.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: townCastle.frame.size.width, height: self.frame.size.height))
-        townCastle.physicsBody = SKPhysicsBody(circleOfRadius: townCastle.size.width / 2 - 100)
+        townCastle.physicsBody = SKPhysicsBody(circleOfRadius: townCastle.size.width / 2 - 110)
         townCastle.physicsBody?.categoryBitMask = PhyCat.Castle
         townCastle.physicsBody?.collisionBitMask = 0
         townCastle.physicsBody?.contactTestBitMask = PhyCat.Enemy
@@ -332,6 +360,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     
                     map.addChild(defaultRange)
                     
+                }
+            }
+            
+            if(gameWinOrLoose)
+            {
+                if (restartBtn.contains(location))
+                {
+                    restartGame()
+                }
+                
+                if (exitBtn.contains(location))
+                {
+                    let gameMenuScene = GameMenuScene()
+                    gameMenuScene.size = CGSize(width: 1280, height: 720)
+                    gameMenuScene.scaleMode = .aspectFill
+                    self.view?.presentScene(gameMenuScene)
                 }
             }
             
@@ -616,7 +660,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         {
             firstObj.node?.removeFromParent()
             townHealth -= 1
-            print(townHealth)
             
             for x in 0...enemiesOnMap.count-1
             {
@@ -631,7 +674,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         {
             secondObj.node?.removeFromParent()
             townHealth -= 1
-            print(townHealth)
             
             for x in 0...enemiesOnMap.count-1
             {
@@ -649,7 +691,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if(self.townHealth >= 1)
         {
             print("Game Win")
-            spawnTimer.invalidate()
+            
+            self.gameWinLooseDisplay()
         }
     }
     
@@ -658,8 +701,84 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if(self.townHealth <= 0)
         {
             print("Game Loose")
-            spawnTimer.invalidate()
+            
+            self.gameWinLooseDisplay()
         }
+    }
+    
+    func gameWinLooseDisplay()
+    {
+        self.spawnTimer.invalidate()
+        
+        self.gameWinOrLoose = true
+        
+        let popUpMessage = SKNode()
+        let popUpMessageBackground = SKSpriteNode(color: SKColor.gray, size: CGSize(width: 350, height: 70))
+        let messageDisplay = SKLabelNode()
+        
+        popUpMessageBackground.position = CGPoint(x: self.frame.size.width / 2 - 40, y: self.frame.size.height / 2)
+        popUpMessage.addChild(popUpMessageBackground)
+        
+        
+        messageDisplay.text = "Gold: \(gold)"
+        messageDisplay.position = CGPoint(x: self.frame.size.width / 2 - 40, y: self.frame.size.height / 2 - 20)
+        messageDisplay.fontSize = 50
+        messageDisplay.fontName = "Oetztype"
+        popUpMessage.addChild(messageDisplay)
+        popUpMessage.setScale(0)
+        popUpMessage.zPosition = 10
+        self.addChild(popUpMessage)
+        popUpMessage.run(SKAction.scale(to: 1, duration: TimeInterval(0.5)))
+        
+        
+        let restartMessage = SKNode()
+        let restartMessageText = SKLabelNode()
+        
+        restartBtn = createButton()
+        
+        restartMessageText.text = "Play Again"
+        restartMessageText.fontSize = 50
+        restartMessageText.position = restartBtn.position
+        restartMessageText.position.y -= 15
+        restartMessageText.fontName = "Oetztype"
+        
+        restartMessage.addChild(restartBtn)
+        restartMessage.addChild(restartMessageText)
+        
+        restartMessage.setScale(0)
+        restartMessage.zPosition = 10
+        self.addChild(restartMessage)
+        restartMessage.run(SKAction.scale(to: 1, duration: TimeInterval(0.5)))
+        
+        
+        let exitMessage = SKNode()
+        let exitBtnText = SKLabelNode()
+        
+        exitBtn = createButton()
+        exitBtn.position.x += 350
+        
+        exitBtnText.text = "Exit"
+        exitBtnText.fontSize = 50
+        exitBtnText.position = exitBtn.position
+        exitBtnText.position.y -= 15
+        exitBtnText.fontName = "Oetztype"
+        
+        exitMessage.addChild(exitBtn)
+        exitMessage.addChild(exitBtnText)
+        
+        exitMessage.setScale(0)
+        exitMessage.zPosition = 10
+        self.addChild(exitMessage)
+        exitMessage.run(SKAction.scale(to: 1, duration: TimeInterval(0.5)))
+    }
+
+    
+    func createButton() -> SKSpriteNode
+    {
+        let button = SKSpriteNode(color: UIColor.gray, size: CGSize(width: 300, height: 70))
+        button.position = CGPoint(x: self.frame.size.width / 2 - 170, y: self.frame.size.height / 2 - 100)
+        
+        return button
     }
     
     func createLabel()
@@ -668,32 +787,60 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         goldLabel.position = CGPoint(x: self.frame.size.width / 2, y: self.frame.size.height / 2 + self.frame.size.height / 2.5)
         goldLabel.fontColor = SKColor.black
         goldLabel.fontSize = 50
+        goldLabel.fontName = "Oetztype"
         goldLabel.zPosition = 10
         map.addChild(goldLabel)
+        
+        townHealthLabel = SKLabelNode(text: "Health: \(townHealth)")
+        townHealthLabel.position = CGPoint(x: self.frame.size.width / 2 + self.frame.size.width / 2.5 - 20, y: self.frame.size.height / 2 + self.frame.size.height / 2.5)
+        townHealthLabel.fontColor = SKColor.black
+        townHealthLabel.fontSize = 50
+        townHealthLabel.fontName = "Oetztype"
+        townHealthLabel.zPosition = 10
+        map.addChild(townHealthLabel)
+    }
+    
+    func restartGame()
+    {
+        towersOnMap.removeAll()
+        towersOnMapAt.removeAll()
+        enemiesOnMap.removeAll()
+        towerPosArray.removeAll()
+        towerSelected.removeAll()
+        
+        self.removeAllChildren()
+        self.removeAllActions()
+        
+        startGame()
     }
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
         
-        goldLabel.text = "Gold: \(gold)"
-        
         //Check if Player Lost
-        self.gameLoose()
+        if(!gameWinOrLoose)
+        {
+            //Update Gold Value and TownHealth value only if player has not lost
+            goldLabel.text = "Gold: \(gold)"
+            townHealthLabel.text = "Health: \(townHealth)"
+            self.gameLoose()
+        }
         
-        if(!towersOnMap.isEmpty)
+        if(!towersOnMap.isEmpty && !enemiesOnMap.isEmpty)
         {
             for i in 0...towersOnMap.count - 1
             {
-                for j in 0...self.numberOfEnemies-1
+                for j in 0...self.enemiesOnMap.count-1
                 {
-                    let enemy = map.childNode(withName: "Orc1_\(self.numberOfEnemies-1-j)")
-                    let location = enemy?.position
+                    //let enemy = map.childNode(withName: "Orc1_\(self.numberOfEnemies-1-j)")
+                    let enemy = enemiesOnMap[self.enemiesOnMap.count-1-j].0
+                    let location = enemy.position
                     
                     //Aim
                     if(location != nil)
                     {
-                        let dx = (location?.x)! - towersOnMap[i].position.x
-                        let dy = (location?.y)! - towersOnMap[i].position.y
+                        let dx = location.x - towersOnMap[i].position.x
+                        let dy = location.y - towersOnMap[i].position.y
                         
                         let angle = atan2(dy, dx)
                         

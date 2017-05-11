@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AF0882A71EC43BE600E5AD05 /* GameMenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0882A61EC43BE600E5AD05 /* GameMenuScene.swift */; };
+		AF0882A91EC4449400E5AD05 /* OETZTYP_.TTF in Resources */ = {isa = PBXBuildFile; fileRef = AF0882A81EC4409400E5AD05 /* OETZTYP_.TTF */; };
 		AF1D7E4A1EC27A5100FE0BD0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1D7E491EC27A5100FE0BD0 /* AppDelegate.swift */; };
 		AF1D7E501EC27A5100FE0BD0 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1D7E4F1EC27A5100FE0BD0 /* GameScene.swift */; };
 		AF1D7E521EC27A5100FE0BD0 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1D7E511EC27A5100FE0BD0 /* GameViewController.swift */; };
@@ -41,6 +43,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AF0882A61EC43BE600E5AD05 /* GameMenuScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameMenuScene.swift; sourceTree = "<group>"; };
+		AF0882A81EC4409400E5AD05 /* OETZTYP_.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = OETZTYP_.TTF; sourceTree = "<group>"; };
 		AF1D7E461EC27A5000FE0BD0 /* p08-loya.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "p08-loya.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF1D7E491EC27A5100FE0BD0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AF1D7E4F1EC27A5100FE0BD0 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -119,7 +123,9 @@
 			children = (
 				AF1D7E7D1EC284B500FE0BD0 /* Level1 */,
 				AF1D7E491EC27A5100FE0BD0 /* AppDelegate.swift */,
+				AF0882A81EC4409400E5AD05 /* OETZTYP_.TTF */,
 				AF1D7E4F1EC27A5100FE0BD0 /* GameScene.swift */,
+				AF0882A61EC43BE600E5AD05 /* GameMenuScene.swift */,
 				AF1D7E511EC27A5100FE0BD0 /* GameViewController.swift */,
 				AF1D7E531EC27A5100FE0BD0 /* Main.storyboard */,
 				AF1D7E561EC27A5100FE0BD0 /* Assets.xcassets */,
@@ -288,6 +294,7 @@
 			files = (
 				AF1D7E831EC284CB00FE0BD0 /* Mark.png in Resources */,
 				AF1D7E551EC27A5100FE0BD0 /* Main.storyboard in Resources */,
+				AF0882A91EC4449400E5AD05 /* OETZTYP_.TTF in Resources */,
 				AF1D7E571EC27A5100FE0BD0 /* Assets.xcassets in Resources */,
 				AF1D7E811EC284CB00FE0BD0 /* Level1.jpg in Resources */,
 				AF1D7E901EC2971500FE0BD0 /* Level1.tmx in Resources */,
@@ -321,6 +328,7 @@
 				AF1D7E521EC27A5100FE0BD0 /* GameViewController.swift in Sources */,
 				AF1D7E4A1EC27A5100FE0BD0 /* AppDelegate.swift in Sources */,
 				AF1D7E8A1EC285D700FE0BD0 /* JSTileMap.m in Sources */,
+				AF0882A71EC43BE600E5AD05 /* GameMenuScene.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -584,6 +592,7 @@
 				AF1D7E761EC27A5100FE0BD0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		AF1D7E771EC27A5100FE0BD0 /* Build configuration list for PBXNativeTarget "p08-loyaTests" */ = {
 			isa = XCConfigurationList;
@@ -592,6 +601,7 @@
 				AF1D7E791EC27A5100FE0BD0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		AF1D7E7A1EC27A5100FE0BD0 /* Build configuration list for PBXNativeTarget "p08-loyaUITests" */ = {
 			isa = XCConfigurationList;
@@ -600,6 +610,7 @@
 				AF1D7E7C1EC27A5100FE0BD0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
