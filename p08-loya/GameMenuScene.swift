@@ -24,14 +24,6 @@ class GameMenuScene: SKScene
         background.zPosition = 1
         self.addChild(background)
         
-        /*
-        //adding snake image
-        let snake = SKSpriteNode(imageNamed: "snake")
-        snake.position = CGPoint(x: self.frame.width / 2 + self.frame.width / 3, y: self.frame.height / 2)
-        snake.zPosition = 2
-        self.addChild(snake)
-        */
-        
         gameName = self.createButton()
         gameName.position.y += 150
         gameName.text = "Tower Defense"
@@ -43,6 +35,13 @@ class GameMenuScene: SKScene
         button1.text = "Play"
         button1.fontSize = 65
         self.addChild(button1)
+        
+        //Rules Display Button
+        button2 = self.createButton()
+        button2.text = "Rules"
+        button2.position.y -= 105
+        button2.fontSize = 65
+        self.addChild(button2)
         
     }
     
@@ -57,6 +56,13 @@ class GameMenuScene: SKScene
                 gamescene.size = CGSize(width: 1280, height: 720)
                 gamescene.scaleMode = .aspectFill
                 self.view?.presentScene(gamescene)
+            }
+            if button2.contains(location)
+            {
+                let gameRulesScene = GameRules()
+                gameRulesScene.size = CGSize(width: 1280, height: 720)
+                gameRulesScene.scaleMode = .aspectFill
+                self.view?.presentScene(gameRulesScene)
             }
         }
     }
