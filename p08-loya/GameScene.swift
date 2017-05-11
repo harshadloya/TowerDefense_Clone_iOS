@@ -53,6 +53,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var townHealthLabel = SKLabelNode()
     
     var enemyToBeRemoved = Int()
+    var enemySize = CGFloat()
+    var tempD = CGFloat()
+
     
     override func didMove(to view: SKView)
     {
@@ -64,7 +67,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //Initial Gold
         gold = 1000
-        wavesCount = 1
+        wavesCount = 5
         timeIntervalInWaveSpawns = 35
         townHealth = 10
         
@@ -79,26 +82,49 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             if(self.wavesCount == 1)
             {
+                let d = CGFloat(550.0)
+                self.tempD = d + 50.0
+                
                 self.numberOfEnemies = 5
+                self.createEnemy1(No: self.numberOfEnemies, Dist: d)
             }
             else if(self.wavesCount == 2)
             {
+                let d = CGFloat(750.0)
+                self.tempD = d + 50.0
+                
                 self.numberOfEnemies = 6
+                self.createEnemy2(No: self.numberOfEnemies, Dist: d)
             }
             else if(self.wavesCount == 3)
             {
+                let d = CGFloat(850.0)
+                self.tempD = d + 50.0
+                
                 self.numberOfEnemies = 7
+                self.createEnemy3(No: self.numberOfEnemies, Dist: d)
             }
             else if(self.wavesCount == 4)
             {
+                let d = CGFloat(1050.0)
+                self.tempD = d + 50.0
+                
                 self.numberOfEnemies = 8
+                self.createEnemy1(No: self.numberOfEnemies-5, Dist: d)
+                self.createEnemy2(No: self.numberOfEnemies-4, Dist: -(self.enemySize*3 - d))
+                self.createEnemy3(No: self.numberOfEnemies-7, Dist: -(self.enemySize*7 - d))
             }
             else if(self.wavesCount == 5)
             {
+                let d = CGFloat(1150.0)
+                self.tempD = d + 50.0
+                
                 self.numberOfEnemies = 9
+                self.createEnemy1(No: self.numberOfEnemies-7, Dist: d)
+                self.createEnemy2(No: self.numberOfEnemies-6, Dist: -(self.enemySize*2 - d))
+                self.createEnemy3(No: self.numberOfEnemies-4, Dist: -(self.enemySize*5 - d))
             }
             
-            self.createEnemy1(No: self.numberOfEnemies)
             
             for x in 0...self.numberOfEnemies-1
             {
@@ -106,7 +132,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
         
-        //let delay = SKAction.wait(forDuration:30, withRange: 5)
         SpawnEnemy = SKAction.sequence([spawn])
         self.run(SpawnEnemy)
         
@@ -124,7 +149,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             print(wavesCount)
             
-            if wavesCount == 5
+            if wavesCount >= 6
             {
                 spawnTimer.invalidate()
                 self.gameWin()
@@ -336,17 +361,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         towersOnMapAt.append(At)
     }
     
-    func createEnemy1(No: Int)
+    func createEnemy1(No: Int, Dist: CGFloat)
     {
-        //enemyHealth = 2
         var enemy = SKSpriteNode(imageNamed: "Orc1_Walk_000")
+        enemySize = enemy.size.width*0.09 / 1.1
+        
         for i in 0...No-1
         {
             enemy = SKSpriteNode(imageNamed: "Orc1_Walk_000")
             enemy.name = "Orc1_\(i)"
             let path = map.childNode(withName: "Path")
             enemy.position.y = (path?.position.y)! + 32
-            enemy.position.x = CGFloat(i) * enemy.size.width*0.09 / 1.1 - 550
+            enemy.position.x = CGFloat(i) * enemy.size.width*0.09 / 1.1 - Dist
             
             print(enemy.position.x)
             
@@ -371,17 +397,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 enemy1Array.append(SKTexture(imageNamed: Name))
             }
             enemy.run(SKAction.repeatForever(SKAction.animate(with: enemy1Array, timePerFrame: 0.16)))
-            enemy.run(SKAction.sequence([SKAction.moveBy(x: self.frame.size.width + CGFloat(i) * enemy.size.width*0.09 / 1.1 + 600, y: 0, duration: 30), SKAction.removeFromParent()]))
+            
+            enemy.run(SKAction.sequence([SKAction.moveBy(x: self.frame.size.width + CGFloat(i) * enemy.size.width*0.09 / 1.1 + self.tempD, y: 0, duration: 30), SKAction.removeFromParent()]))
             
             //map.addChild(enemy)
             enemiesOnMap.append((enemy,2))
         }
     }
     
-    func createEnemy2(No: Int)
+    func createEnemy2(No: Int, Dist: CGFloat)
     {
         //enemyHealth = 2
         var enemy = SKSpriteNode(imageNamed: "Orc2_Walk_000")
+        enemySize = enemy.size.width*0.09 / 1.1
+        
         
         for i in 0...No-1
         {
@@ -389,7 +418,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             enemy.name = "Orc2_\(i)"
             let path = map.childNode(withName: "Path")
             enemy.position.y = (path?.position.y)! + 32
-            enemy.position.x = CGFloat(i) * enemy.size.width*0.09 / 1.1 - 550
+            enemy.position.x = CGFloat(i) * enemy.size.width*0.09 / 1.1 - Dist
             
             print(enemy.position.x)
             
@@ -414,14 +443,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 enemy2Array.append(SKTexture(imageNamed: Name))
             }
             enemy.run(SKAction.repeatForever(SKAction.animate(with: enemy2Array, timePerFrame: 0.16)))
-            enemy.run(SKAction.sequence([SKAction.moveBy(x: self.frame.size.width + CGFloat(i) * enemy.size.width*0.09 / 1.1 + 600, y: 0, duration: 30), SKAction.removeFromParent()]))
+            
+            enemy.run(SKAction.sequence([SKAction.moveBy(x: self.frame.size.width + CGFloat(i) * enemy.size.width*0.09 / 1.1 + self.tempD, y: 0, duration: 30), SKAction.removeFromParent()]))
             
             //map.addChild(enemy)
             enemiesOnMap.append((enemy,2))
         }
     }
     
-    func createEnemy3(No: Int)
+    func createEnemy3(No: Int, Dist: CGFloat)
     {
         //enemyHealth = 2
         var enemy = SKSpriteNode(imageNamed: "Orc3_Walk_000")
@@ -431,7 +461,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             enemy.name = "Orc3_\(i)"
             let path = map.childNode(withName: "Path")
             enemy.position.y = (path?.position.y)! + 32
-            enemy.position.x = CGFloat(i) * enemy.size.width*0.09 / 1.1 - 550
+            enemy.position.x = CGFloat(i) * enemy.size.width*0.09 / 1.1 - Dist
             
             print(enemy.position.x)
             
@@ -456,7 +486,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 enemy3Array.append(SKTexture(imageNamed: Name))
             }
             enemy.run(SKAction.repeatForever(SKAction.animate(with: enemy3Array, timePerFrame: 0.16)))
-            enemy.run(SKAction.sequence([SKAction.moveBy(x: self.frame.size.width + CGFloat(i) * enemy.size.width*0.09 / 1.1 + 600, y: 0, duration: 30), SKAction.removeFromParent()]))
+            
+            enemy.run(SKAction.sequence([SKAction.moveBy(x: self.frame.size.width + CGFloat(i) * enemy.size.width*0.09 / 1.1 + self.tempD, y: 0, duration: 30), SKAction.removeFromParent()]))
             
             //map.addChild(enemy)
             enemiesOnMap.append((enemy,2))
