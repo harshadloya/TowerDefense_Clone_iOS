@@ -43,6 +43,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var bulletFired = Bool()
     var numberOfEnemies = Int()
     
+    var enemiesOnMap = [(SKSpriteNode,Int)]()
+    var SpawnEnemy = SKAction()
+    
+    var timeIntervalInWaveSpawns = Int()
+    var spawnTimer = Timer()
+    
+    var townHealth = Int()
+    var townHealthLabel = SKLabelNode()
+    
+    var enemyToBeRemoved = Int()
+    
     override func didMove(to view: SKView)
     {
         self.physicsWorld.contactDelegate = self
@@ -52,8 +63,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(map)
         
         //Initial Gold
-        gold = 100
+        gold = 1000
         wavesCount = 1
+        timeIntervalInWaveSpawns = 35
+        townHealth = 10
         
         self.createPhysicsAssets()
         self.createTowerTypesIcons()
@@ -85,16 +98,39 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 self.numberOfEnemies = 9
             }
             
-            self.createEnemies(No: self.numberOfEnemies)
+            self.createEnemy1(No: self.numberOfEnemies)
+            
+            for x in 0...self.numberOfEnemies-1
+            {
+                self.map.addChild(self.enemiesOnMap[x].0)
+            }
         }
         
-        let delay = SKAction.wait(forDuration:20, withRange: 5)
-        let SpawnDelay = SKAction.sequence([spawn, delay])
+        //let delay = SKAction.wait(forDuration:30, withRange: 5)
+        SpawnEnemy = SKAction.sequence([spawn])
+        self.run(SpawnEnemy)
         
-        //for _ in 1...wavesCount
-        //{
-            self.run(SpawnDelay)
-        //}
+        spawnTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.spawnEnemiesInInterval), userInfo: nil, repeats: true)
+    }
+    
+    func spawnEnemiesInInterval()
+    {
+        timeIntervalInWaveSpawns -= 1
+        if(timeIntervalInWaveSpawns == 0)
+        {
+           self.run(SpawnEnemy)
+            timeIntervalInWaveSpawns = 35
+            wavesCount += 1
+            
+            print(wavesCount)
+            
+            if wavesCount == 5
+            {
+                spawnTimer.invalidate()
+                self.gameWin()
+            }
+            
+        }
     }
     
     func createPhysicsAssets()
@@ -300,8 +336,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         towersOnMapAt.append(At)
     }
     
-    func createEnemies(No: Int)
+    func createEnemy1(No: Int)
     {
+        //enemyHealth = 2
         var enemy = SKSpriteNode(imageNamed: "Orc1_Walk_000")
         for i in 0...No-1
         {
@@ -310,6 +347,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let path = map.childNode(withName: "Path")
             enemy.position.y = (path?.position.y)! + 32
             enemy.position.x = CGFloat(i) * enemy.size.width*0.09 / 1.1 - 550
+            
+            print(enemy.position.x)
             
             enemy.zPosition = 2
             enemy.setScale(0.09)
@@ -334,7 +373,93 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             enemy.run(SKAction.repeatForever(SKAction.animate(with: enemy1Array, timePerFrame: 0.16)))
             enemy.run(SKAction.sequence([SKAction.moveBy(x: self.frame.size.width + CGFloat(i) * enemy.size.width*0.09 / 1.1 + 600, y: 0, duration: 30), SKAction.removeFromParent()]))
             
-            map.addChild(enemy)
+            //map.addChild(enemy)
+            enemiesOnMap.append((enemy,2))
+        }
+    }
+    
+    func createEnemy2(No: Int)
+    {
+        //enemyHealth = 2
+        var enemy = SKSpriteNode(imageNamed: "Orc2_Walk_000")
+        
+        for i in 0...No-1
+        {
+            enemy = SKSpriteNode(imageNamed: "Orc2_Walk_000")
+            enemy.name = "Orc2_\(i)"
+            let path = map.childNode(withName: "Path")
+            enemy.position.y = (path?.position.y)! + 32
+            enemy.position.x = CGFloat(i) * enemy.size.width*0.09 / 1.1 - 550
+            
+            print(enemy.position.x)
+            
+            enemy.zPosition = 2
+            enemy.setScale(0.09)
+            
+            enemy.physicsBody = SKPhysicsBody(rectangleOf: enemy.size)
+            enemy.physicsBody?.affectedByGravity = false
+            enemy.physicsBody?.categoryBitMask = PhyCat.Enemy
+            enemy.physicsBody?.collisionBitMask = 0
+            enemy.physicsBody?.contactTestBitMask = PhyCat.Bullet | PhyCat.TowerRange
+            enemy.physicsBody?.isDynamic = false
+            enemy.physicsBody?.allowsRotation = false
+            
+            var enemy2 = SKTextureAtlas()
+            var enemy2Array = [SKTexture]()
+            
+            enemy2 = SKTextureAtlas(named: "Orc2_Walk.atlas")
+            for i in 0...enemy2.textureNames.count-1
+            {
+                let Name = "Orc2_Walk_00\(i).png"
+                enemy2Array.append(SKTexture(imageNamed: Name))
+            }
+            enemy.run(SKAction.repeatForever(SKAction.animate(with: enemy2Array, timePerFrame: 0.16)))
+            enemy.run(SKAction.sequence([SKAction.moveBy(x: self.frame.size.width + CGFloat(i) * enemy.size.width*0.09 / 1.1 + 600, y: 0, duration: 30), SKAction.removeFromParent()]))
+            
+            //map.addChild(enemy)
+            enemiesOnMap.append((enemy,2))
+        }
+    }
+    
+    func createEnemy3(No: Int)
+    {
+        //enemyHealth = 2
+        var enemy = SKSpriteNode(imageNamed: "Orc3_Walk_000")
+        for i in 0...No-1
+        {
+            enemy = SKSpriteNode(imageNamed: "Orc3_Walk_000")
+            enemy.name = "Orc3_\(i)"
+            let path = map.childNode(withName: "Path")
+            enemy.position.y = (path?.position.y)! + 32
+            enemy.position.x = CGFloat(i) * enemy.size.width*0.09 / 1.1 - 550
+            
+            print(enemy.position.x)
+            
+            enemy.zPosition = 2
+            enemy.setScale(0.09)
+            
+            enemy.physicsBody = SKPhysicsBody(rectangleOf: enemy.size)
+            enemy.physicsBody?.affectedByGravity = false
+            enemy.physicsBody?.categoryBitMask = PhyCat.Enemy
+            enemy.physicsBody?.collisionBitMask = 0
+            enemy.physicsBody?.contactTestBitMask = PhyCat.Bullet | PhyCat.TowerRange
+            enemy.physicsBody?.isDynamic = false
+            enemy.physicsBody?.allowsRotation = false
+            
+            var enemy3 = SKTextureAtlas()
+            var enemy3Array = [SKTexture]()
+            
+            enemy3 = SKTextureAtlas(named: "Orc3_Walk.atlas")
+            for i in 0...enemy3.textureNames.count-1
+            {
+                let Name = "Orc3_Walk_00\(i).png"
+                enemy3Array.append(SKTexture(imageNamed: Name))
+            }
+            enemy.run(SKAction.repeatForever(SKAction.animate(with: enemy3Array, timePerFrame: 0.16)))
+            enemy.run(SKAction.sequence([SKAction.moveBy(x: self.frame.size.width + CGFloat(i) * enemy.size.width*0.09 / 1.1 + 600, y: 0, duration: 30), SKAction.removeFromParent()]))
+            
+            //map.addChild(enemy)
+            enemiesOnMap.append((enemy,2))
         }
     }
     
@@ -408,6 +533,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             gold += 10
             bulletFired = false
             
+            for x in 0...enemiesOnMap.count-1
+            {
+                if firstObj.node == enemiesOnMap[x].0
+                {
+                    enemyToBeRemoved = x
+                }
+            }
+            enemiesOnMap.remove(at: enemyToBeRemoved)
         }
         else if (firstObj.categoryBitMask == PhyCat.Bullet && secondObj.categoryBitMask == PhyCat.Enemy)
         {
@@ -415,7 +548,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             secondObj.node?.removeFromParent()
             gold += 10
             bulletFired = false
+            
+            for x in 0...enemiesOnMap.count-1
+            {
+                if secondObj.node == enemiesOnMap[x].0
+                {
+                    enemyToBeRemoved = x
+                }
+            }
+            enemiesOnMap.remove(at: enemyToBeRemoved)
         }
+    }
+    
+    func gameWin()
+    {
+        print("Game Win")
+    }
+    
+    func gameLoose()
+    {
+        print("Game Loose")
     }
     
     func createLabel()
